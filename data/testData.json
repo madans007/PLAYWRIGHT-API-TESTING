@@ -1,0 +1,36 @@
+[
+  {
+    "name": "John Doe",
+    "username": "johnd",
+    "email": "john@example.com",
+    "address": {
+      "street": "123 Main St",
+      "city": "New York",
+      "zipcode": "10001"
+    },
+    "phone": "123-456-7890",
+    "website": "https://johndoe.com",
+    "company": {
+      "name": "Doe Inc",
+      "catchPhrase": "Innovate and Lead",
+      "bs": "business solutions"
+    }
+  },
+  {
+    "name": "Jane Smith",
+    "username": "janes",
+    "email": "jane@example.com",
+    "address": {
+      "street": "456 Oak St",
+      "city": "Los Angeles",
+      "zipcode": "90001"
+    },
+    "phone": "987-654-3210",
+    "website": "https://janesmith.com",
+    "company": {
+      "name": "Smith LLC",
+      "catchPhrase": "Excellence in Action",
+      "bs": "strategic solutions"
+    }
+  }
+]
