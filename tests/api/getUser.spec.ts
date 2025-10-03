@@ -24,8 +24,6 @@ test.describe('JSONPlaceholder API - Get User', () => {
     It always returns an id starting from 101, regardless of what IDs exist in the GET endpoint.
     IDs 11–100 are not used for fake POST responses — they decided 101+ to clearly distinguish faked users from predefined ones.
 
-
-
     // Test for dynamic creation and retrieval
 
     test('Create and Get User dynamically', async ({ request }) => {
