@@ -22,10 +22,10 @@ test.describe('JSON Placeholder API- Update User', () => {
 
     test('Partial update user with PATCH', async ({ request }) => {
 
-        const userId: number = 2;
+        const userIdTwo: number = 2;
 
         const partilaUpdate: any = { email: 'patched@example.com' };
-        const patchResponse:APIResponse= await request.patch(`https://jsonplaceholder.typicode.com/users/${userId}`, { data: partilaUpdate })
+        const patchResponse:APIResponse= await request.patch(`https://jsonplaceholder.typicode.com/users/${userIdTwo}`, { data: partilaUpdate })
         expect(patchResponse.status()).toBe(200);
 
         const patchResponseBody: any = await patchResponse.json();
