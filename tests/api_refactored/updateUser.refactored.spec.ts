@@ -19,12 +19,12 @@ test.describe('JSON Placeholder API- Update User Refactored', () => {
 
     })
 
-    test('Partial update user with PATCH Refactored', async ({ userClient }) => {
+    test('Partial update user with PATCH Refactored', async ({ userClientWithLogger }) => {
 
         const userIdTwo: number = 2;
 
         const partilaUpdate: any = { email: 'patched@example.com' };
-        const patchResponse: APIResponse = await userClient.patchUser(2, partilaUpdate);
+        const patchResponse: APIResponse = await userClientWithLogger.patchUser(2, partilaUpdate);
         expect(patchResponse.status()).toBe(200);
 
         const patchResponseBody: any = await patchResponse.json();

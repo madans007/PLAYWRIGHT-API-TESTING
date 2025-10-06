@@ -6,10 +6,10 @@ import { getRandomUser, getJsonUser } from '../../utils/dataProvider';
 
 test.describe('JSONPlaceholder API - Create User Refactored', () => {
 
-    test('Create User with Faker (dynamic) Refactored', async ({ userClient }) => {
+    test('Create User with Faker (dynamic) Refactored', async ({ userClientWithLogger }) => {
         const payload: any = getRandomUser();
 
-        const response: APIResponse = await userClient.createUser(payload);
+        const response: APIResponse = await userClientWithLogger.createUser(payload);
         expect(response.status()).toBe(201);             //accepted
 
         const body = await response.json();             //body can be wriiten as responseBody as well
@@ -17,10 +17,10 @@ test.describe('JSONPlaceholder API - Create User Refactored', () => {
         expect(body).toHaveProperty('id');
     })
 
-    test('Create User with Static JSON Refactored', async ({ userClient }) => {
+    test('Create User with Static JSON Refactored', async ({ userClientWithLogger }) => {
         const payload: any = getJsonUser();
 
-        const response: APIResponse = await userClient.createUser(payload);
+        const response: APIResponse = await userClientWithLogger.createUser(payload);
         expect(response.status()).toBe(201);
 
         const body = await response.json();
