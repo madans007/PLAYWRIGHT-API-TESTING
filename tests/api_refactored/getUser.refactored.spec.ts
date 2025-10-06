@@ -7,7 +7,7 @@ test.describe('JSONPlaceholder API - Get User Refactored', () => {
 
     // Test for predefined user
     test('Get User by ID Refactored', async ({ userClient }) => {
-        const response: APIResponse = await userClient.deleteUser(1);
+        const response: APIResponse = await userClient.getUser(1);
         const body: any = await response.json();
         console.log('Fetched Predefined User:', body);
         expect(body).toHaveProperty('id', predefinedUserId);
