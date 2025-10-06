@@ -1,0 +1,3 @@
+[submodule "tests/api"]
+	path = tests/api
+	url = https://github.com/madans007/PLAYWRIGHT-API-Sample_Files.git
