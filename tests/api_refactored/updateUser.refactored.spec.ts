@@ -1,7 +1,8 @@
 import { test } from '../../fixtures/baseTest';
 import { APIResponse, expect } from '@playwright/test';
 import { getRandomUser } from '../../utils/dataProvider';
-
+import { updateUserSchema, updateUserPartialSchema } from '../../schemas/updateUserSchema';
+import { validateSchema } from '../../utils/validator';
 
 
 test.describe('JSON Placeholder API- Update User Refactored', () => {
@@ -17,6 +18,7 @@ test.describe('JSON Placeholder API- Update User Refactored', () => {
         expect(updatedUserResponseBody).toHaveProperty('name', updateUserPayload.name);
         expect(updatedUserResponseBody).toHaveProperty('email', updateUserPayload.email);
 
+        expect(validateSchema(updateUserSchema, updatedUserResponseBody)).toBeTruthy();
     })
 
     test('Partial update user with PATCH Refactored', async ({ userClientWithLogger }) => {
@@ -30,6 +32,8 @@ test.describe('JSON Placeholder API- Update User Refactored', () => {
         const patchResponseBody: any = await patchResponse.json();
         console.log('Patched User:', patchResponseBody);
         expect(patchResponseBody).toHaveProperty('email', "patched@example.com");
+
+        expect(validateSchema(updateUserPartialSchema, patchResponseBody)).toBeTruthy();
     })
 
 })

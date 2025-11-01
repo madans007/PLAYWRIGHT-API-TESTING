@@ -21,7 +21,7 @@ test.describe('JSONPlaceholder API - Create User Refactored', () => {
 
     })
 
-    test('Create User with Static JSON Refactored', async ({ userClientWithLogger }) => {
+    test.only('Create User with Static JSON Refactored', async ({ userClientWithLogger }) => {
         const payload: any = getJsonUser();
 
         const response: APIResponse = await userClientWithLogger.createUser(payload);
@@ -30,6 +30,8 @@ test.describe('JSONPlaceholder API - Create User Refactored', () => {
         const body = await response.json();
         console.log('Created User (Static JSON):', body);
         expect(body).toHaveProperty('id');
+
+        expect(validateSchema(createUserSchema, body)).toBeTruthy();  
     });
 
 })

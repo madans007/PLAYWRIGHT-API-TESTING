@@ -1,6 +1,5 @@
 
-export const createUserSchema = {
-    $schema: "http://json-schema.org/draft-07/schema#",
+export const getUserSchema = {
     title: "User",
     type: "object",
     properties: {
@@ -12,17 +11,24 @@ export const createUserSchema = {
             type: "object",
             properties: {
                 street: { type: "string" },
+                suite: { type: "string" },
                 city: { type: "string" },
-                zipcode: { type: "string" }
+                zipcode: { type: "string" },
+                geo: {
+                    type: "object",
+                    properties: {
+                        lat: { type: "string" },
+                        lng: { type: "string" }
+                    },
+                    required: ["lat", "lng"],
+                    additionalProperties: false
+                }
             },
-            required: ["street", "city", "zipcode"],
+            required: ["street", "suite", "city", "zipcode", "geo"],
             additionalProperties: false
         },
-        phone: {
-            type: "string",
-            pattern: "^[0-9\\.\\-\\s\\(\\)]+( x[0-9]+)?$"
-        },
-        website: { type: "string", format: "uri" },
+        phone: { type: "string", pattern: "^[0-9\\-\\s\\(\\)]+( x[0-9]+)?$" },
+        website: { type: "string" },
         company: {
             type: "object",
             properties: {
