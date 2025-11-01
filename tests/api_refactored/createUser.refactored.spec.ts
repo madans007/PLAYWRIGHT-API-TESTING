@@ -1,7 +1,8 @@
 import { test } from '../../fixtures/baseTest';
 import { APIResponse, expect } from '@playwright/test';
 import { getRandomUser, getJsonUser } from '../../utils/dataProvider';
-
+import { createUserSchema } from '../../schemas/createUserSchema';
+import { validateSchema } from '../../utils/validator';
 
 
 test.describe('JSONPlaceholder API - Create User Refactored', () => {
@@ -15,6 +16,9 @@ test.describe('JSONPlaceholder API - Create User Refactored', () => {
         const body = await response.json();             //body can be wriiten as responseBody as well
         console.log('Created User (Faker):', body);
         expect(body).toHaveProperty('id');
+
+        expect(validateSchema(createUserSchema, body)).toBeTruthy();    //schema val
+
     })
 
     test('Create User with Static JSON Refactored', async ({ userClientWithLogger }) => {
