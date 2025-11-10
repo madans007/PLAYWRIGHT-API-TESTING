@@ -1,48 +1,38 @@
-import { test, expect, request } from '@playwright/test';
+import { test, expect, request, APIResponse, APIRequestContext } from '@playwright/test';
 
-test.describe('OAuth2 - Client Credentials Flow (Postman Echo)', () => {
+test.describe('OAuth2 - Simulated Client Credentials Flow (FakeStore API)', () => {
 
     test('Get access token and access protected resource', async () => {
+        const context: APIRequestContext = await request.newContext();
 
-        const clientId = 'postman-client';
-        const clientSecret = 'postman-secret';
-        const basicAuth: string = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
-
-        const context = await request.newContext();
-        const tokenResponse = await context.post('https://postman-echo.com/oauth2/token', {
-            headers: {
-                'Authorization': `Basic ${basicAuth}`,
-                'Content-Type': 'application/x-www-form-urlencoded',
+        // first simulate OAuth login to get JWT token
+        const loginResponse: APIResponse = await context.post('https://fakestoreapi.com/auth/login', {
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+                username: 'mor_2314',
+                password: '83r5^_',   
             },
-            form: { grant_type: 'client_credentials' },
         });
 
-        console.log('Token Response Status:', tokenResponse.status());
-        expect(tokenResponse.status()).toBe(200);
-        const tokenData: any = await tokenResponse.json();
-        console.log('Token Data:', tokenData);
-        const accessToken: any = tokenData.access_token;
-        expect(accessToken).toBeTruthy();
+        console.log('Login Status:', loginResponse.status());
+        const loginBody: any = await loginResponse.json();
+        console.log('Login Body:', loginBody);
+        expect([200, 201]).toContain(loginResponse.status());
+        expect(loginBody.token, 'Token not found in response').toBeTruthy();
 
-        // using bearer token to access protected endpoint
-        const protectedResponse = await context.get('https://postman-echo.com/protected', {
+        const accessToken: any = loginBody.token;
+
+        // Now use token to access protected resource
+        const protectedResponse: APIResponse = await context.get('https://fakestoreapi.com/carts/user/2', {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
         });
 
         console.log('Protected Status:', protectedResponse.status());
-        const protectedData = await protectedResponse.text();
-        console.log('Protected Data:', protectedData);
+        const protectedBody: any = await protectedResponse.json();
+        console.log('Protected Body:', protectedBody);
         expect(protectedResponse.status()).toBe(200);
-
+        expect(Array.isArray(protectedBody)).toBeTruthy();
     });
 });
-
-
-//OAuth2 
-
-// Sends client_id + client_secret (via Basic Auth)
-// Gets a fake OAuth2 token from Postman Echo
-// Calls /protected endpoint using Bearer <token>
-// Verifies it all works — no signup required
