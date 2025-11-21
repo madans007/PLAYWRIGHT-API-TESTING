@@ -10,7 +10,7 @@ test.describe('API Key Authentication - Weather API', () => {
         const context: APIRequestContext = await request.newContext();
         const response: APIResponse = await context.get('https://api.weatherapi.com/v1/current.json', {
             params: {
-                key: 'c47152f1f9264a95ba9112818251010',         // key tweaked
+                key: 'c47152f1f9264a95ba9112818251010',         // key to be tweaked to one
                 q: 'London',
             }
         });
